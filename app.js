@@ -1,11 +1,23 @@
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
+import mongoose from "mongoose";
 
 import contactsRouter from "./routes/api/contacts.js";
 
+const DB_HOST =
+  "mongodb+srv://Elena_Krapivnaya:HzgTLCx%40EUx.9X_@atlascluster.yl2exwb.mongodb.net/?retryWrites=true&w=majority";
+mongoose
+  .connect(DB_HOST)
+  .then(() => {
+    app.listen(3000, console.log("Server running on 3000 PORT"));
+  })
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
+
 const app = express();
-app.listen(3000, console.log("Server running on 3000 PORT"));
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
