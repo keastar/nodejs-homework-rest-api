@@ -4,7 +4,11 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 import contactsRouter from "./routes/api/contacts.js";
-// import { DB_HOST } from "./config.js";
+
+//ищет в корне файл проекта .env и читает его по рядкам
+//и добавляет глобальные объекты process.env в процессе запуска проекта
+import "dotenv/config";
+
 const { DB_HOST, PORT = 3000 } = process.env;
 
 mongoose
