@@ -1,7 +1,7 @@
 import express from "express";
 import { contactsController } from "../../controllers/index.js";
 import { validateBody } from "../../decoratorse/index.js";
-import { isEmptyBody } from "../../middleware/index.js";
+import { isNotEmptyBody } from "../../middleware/index.js";
 import {
   contactAddScheme,
   contactUpdateScheme,
@@ -17,7 +17,7 @@ router.get("/:id", isValidId, contactsController.getByid);
 
 router.post(
   "/",
-  isEmptyBody,
+  isNotEmptyBody,
   validateBody(contactAddScheme),
   contactsController.addContact
 );
@@ -26,7 +26,7 @@ router.delete("/:id", isValidId, contactsController.deleteContact);
 
 router.put(
   "/:id",
-  isEmptyBody,
+  isNotEmptyBody,
   isValidId,
   validateBody(contactUpdateScheme),
   contactsController.updateContact
@@ -35,7 +35,7 @@ router.put(
 router.patch(
   "/:id/favorite",
   isValidId,
-  isEmptyBody,
+  isNotEmptyBody,
   validateBody(contactUpdateFavoriteSchema),
   contactsController.updateContact
 );

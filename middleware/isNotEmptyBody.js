@@ -1,4 +1,4 @@
-const isEmptyBody = (req, res, next) => {
+const isNotEmptyBody = (req, res, next) => {
   const { length } = Object.keys(req.body);
   // Если нет полей свойств у запрашиваемого объекта, то выдает сообщение(ошибку), что у запрашиваемого объекта
   //должны быть поля свойств
@@ -8,4 +8,4 @@ const isEmptyBody = (req, res, next) => {
   next();
 };
 
-export default isEmptyBody;
+export default isNotEmptyBody;

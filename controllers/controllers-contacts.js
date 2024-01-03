@@ -1,4 +1,4 @@
-import express from "express";
+// import express from "express";
 import { HttpError } from "../helpers/index.js";
 import Contact from "../models/Contact.js";
 import ctrlWrapper from "../decoratorse/ctrlWrapper.js";
@@ -6,12 +6,8 @@ import ctrlWrapper from "../decoratorse/ctrlWrapper.js";
 // const router = express.Router();
 
 const getAll = async (req, res, next) => {
-  try {
-    const result = await Contact.find({});
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
+  const result = await Contact.find({});
+  res.json(result);
 };
 
 const getByid = async (req, res) => {
@@ -20,6 +16,7 @@ const getByid = async (req, res) => {
   if (!resultId) {
     throw HttpError(404, `Contact with contactId=${id} not found`);
   }
+  res.json(resultId);
 };
 
 const addContact = async (req, res, next) => {
