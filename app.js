@@ -11,6 +11,8 @@ import contactsRouter from "./routes/api/contacts.js";
 //и добавляет глобальные объекты process.env в процессе запуска проекта
 import "dotenv/config";
 
+import authRouter from "./routes/api/authorization.js";
+
 const { DB_HOST, PORT = 3000 } = process.env;
 
 // const payload = {
