@@ -4,7 +4,7 @@ import { handleSaveError, additingUpdateSettings } from "./hooks.js";
 
 const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-const UserSchema = new Schema(
+const JoinSchema = new Schema(
   {
     name: {
       type: String,
@@ -30,6 +30,7 @@ const UserSchema = new Schema(
       type: String,
       default: null,
     },
+    owner: { type: Schema.Types.ObjectId, ref: "join", requared: true },
   },
   {
     versionKey: false,
@@ -37,7 +38,7 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.post("notsave", handleSaveError);
+JoinSchema.post("notsave", handleSaveError);
 
 export const registerScheme = Joi.object({
   name: Joi.string().required(),
@@ -52,9 +53,9 @@ export const loginScheme = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
 });
 
-const User = model("user", UserSchema);
+const Join = model("join", JoinSchema);
 
-export default User;
+export default Join;
 
 // module.exports = {
 //     User,
