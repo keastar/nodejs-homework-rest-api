@@ -1,9 +1,6 @@
-// import express from "express";
 import { HttpError } from "../helpers/index.js";
 import Contact from "../models/Contact.js";
 import ctrlWrapper from "../decoratorse/ctrlWrapper.js";
-
-// const router = express.Router();
 
 const getAll = async (req, res, next) => {
   const result = await Contact.find({});

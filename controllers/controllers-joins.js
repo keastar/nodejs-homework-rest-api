@@ -1,6 +1,5 @@
 import { HttpError } from "../helpers/index.js";
 import bcrypt from "bcrypt";
-// import express from "express";
 import Join from "../models/Join.js";
 import jwt from "jsonwebtoken";
 import ctrlWrapper from "../decoratorse/ctrlWrapper.js";
@@ -33,7 +32,7 @@ const login = async (req, res) => {
   if (!join) {
     throw HttpError(401, "Email or password is invalide");
   }
-  //сравниваем пароль, который пришел с фронтенда с тем, который сохраняется в базе
+
   const passwordCompare = await bcrypt.compare(password, join.password);
 
   if (!passwordCompare) {
@@ -68,14 +67,12 @@ const logout = async (req, res) => {
 };
 
 const getAll = async (req, res, next) => {
-  const { id: owner } = req.body;
   const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
-  // const result = await Join.find({});
-  const result = await Join.find({ owner }, "-createdAt -updatedAt", {
+  const result = await Join.find("-createdAt -updatedAt", {
     skip,
     limit,
-  }).populate("owner", "name email");
+  }).populate("name email");
   res.json(result);
 };
 

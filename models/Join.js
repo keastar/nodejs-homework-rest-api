@@ -44,20 +44,11 @@ export const registerScheme = Joi.object({
   name: Joi.string().required(),
   password: Joi.string().required(),
   email: Joi.string().pattern(emailRegExp).required(),
-  //   subscription: string().required(),
-  //   token: string().required(),
 });
 
 export const loginScheme = Joi.object({
   password: Joi.string().required(),
   email: Joi.string().pattern(emailRegExp).required(),
 });
-
 const Join = model("join", JoinSchema);
-
 export default Join;
-
-// module.exports = {
-//     User,
-//     schemas,
-// }
