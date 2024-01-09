@@ -9,7 +9,6 @@ const router = express.Router();
 //SIGNUP когда приходит запрос на регистрацию, то проверка происходит по registerScheme
 router.post(
   "/register",
-  // authenticate,
   isNotEmptyBody,
   validateBody(registerScheme),
   joinsController.register
@@ -18,7 +17,6 @@ router.post(
 //SIGNIN когда приходит запрос на логинизацию, то проверка происходит по loginScheme
 router.post(
   "/login",
-  // authenticate,
   isNotEmptyBody,
   validateBody(loginScheme),
   joinsController.login
