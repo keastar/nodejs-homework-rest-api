@@ -10,7 +10,7 @@ const { SECRET_KEY } = process.env;
 
 const register = async (req, res) => {
   const { email, password } = req.body;
-  const { id: owner } = req.join;
+  const { id: owner } = req.body;
   const join = await Join.findOne({ email });
   if (join) {
     throw HttpError(409, "Email already in use");
@@ -60,15 +60,15 @@ const getCurrent = async (req, res, next) => {
 };
 
 const logout = async (req, res) => {
-  const { id } = req.join;
-  await User.findByIdAndUpdate(id, { token: "" });
+  const { id } = req.body;
+  await Join.findByIdAndUpdate(id, { token: "" });
   res.json({
     message: "Logout success",
   });
 };
 
 const getAll = async (req, res, next) => {
-  const { id: owner } = req.join;
+  const { id: owner } = req.body;
   const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
   // const result = await Join.find({});

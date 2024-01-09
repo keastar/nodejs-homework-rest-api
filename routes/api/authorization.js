@@ -9,7 +9,7 @@ const router = express.Router();
 //SIGNUP когда приходит запрос на регистрацию, то проверка происходит по registerScheme
 router.post(
   "/register",
-  authenticate,
+  // authenticate,
   isNotEmptyBody,
   validateBody(registerScheme),
   joinsController.register
@@ -18,7 +18,7 @@ router.post(
 //SIGNIN когда приходит запрос на логинизацию, то проверка происходит по loginScheme
 router.post(
   "/login",
-  authenticate,
+  // authenticate,
   isNotEmptyBody,
   validateBody(loginScheme),
   joinsController.login
@@ -29,8 +29,4 @@ router.post("/logout", authenticate, joinsController.logout);
 
 router.get("/", authenticate, joinsController.getAll);
 
-// router.login("/login", usersController.login);
-// router.logout("/logout", usersController.logout);
-// router.current("/current", usersController.current);
-//must be registration form and authorization
 export default router;
