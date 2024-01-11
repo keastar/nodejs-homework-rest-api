@@ -1,9 +1,14 @@
 import { HttpError } from "../helpers/index.js";
 import Contact from "../models/Contact.js";
+import Join from "../models/Join.js";
 import ctrlWrapper from "../decoratorse/ctrlWrapper.js";
 
 const getAll = async (req, res, next) => {
-  const result = await Contact.find({});
+  const { id: owner } = req.join;
+  const result = await Contact.find(
+    { owner },
+    "-createdAt -updatedAt"
+  ).populate("owner", "name email");
   res.json(result);
 };
 
@@ -17,7 +22,8 @@ const getByid = async (req, res) => {
 };
 
 const addContact = async (req, res, next) => {
-  const resultAdd = await Contact.create(req.body);
+  const { id: owner } = req.join;
+  const resultAdd = await Contact.create({ ...req.body, owner });
   res.json(resultAdd);
 };
 

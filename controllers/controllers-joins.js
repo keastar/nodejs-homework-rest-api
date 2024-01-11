@@ -69,7 +69,7 @@ const logout = async (req, res) => {
 const getAll = async (req, res, next) => {
   const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
-  const result = await Join.find("-createdAt -updatedAt", {
+  const result = await Join.find({ owner }, "-createdAt -updatedAt", {
     skip,
     limit,
   }).populate("name email");

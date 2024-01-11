@@ -1,4 +1,5 @@
 import Joi from "joi";
+// import Join from "../models/Join.js";
 import { Schema, model } from "mongoose";
 import { handleSaveError, additingUpdateSettings } from "./hooks.js";
 
@@ -20,7 +21,8 @@ const contactSchema = new Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "join",
+      required: true,
     },
   },
   {

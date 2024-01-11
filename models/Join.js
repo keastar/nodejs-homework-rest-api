@@ -30,7 +30,7 @@ const JoinSchema = new Schema(
       type: String,
       default: null,
     },
-    owner: { type: Schema.Types.ObjectId, ref: "join", requared: true },
+    // owner: { type: Schema.Types.ObjectId, ref: "join", requared: true },
   },
   {
     versionKey: false,
@@ -50,5 +50,7 @@ export const loginScheme = Joi.object({
   password: Joi.string().required(),
   email: Joi.string().pattern(emailRegExp).required(),
 });
+
 const Join = model("join", JoinSchema);
+
 export default Join;
