@@ -30,6 +30,10 @@ const JoinSchema = new Schema(
       type: String,
       default: null,
     },
+    poster: {
+      type: String,
+      required: true,
+    },
     owner: { type: Schema.Types.ObjectId, ref: "join", requared: true },
   },
   {
@@ -44,8 +48,6 @@ export const registerScheme = Joi.object({
   name: Joi.string().required(),
   password: Joi.string().required(),
   email: Joi.string().pattern(emailRegExp).required(),
-  //   subscription: string().required(),
-  //   token: string().required(),
 });
 
 export const loginScheme = Joi.object({
@@ -56,8 +58,3 @@ export const loginScheme = Joi.object({
 const Join = model("join", JoinSchema);
 
 export default Join;
-
-// module.exports = {
-//     User,
-//     schemas,
-// }

@@ -1,12 +1,17 @@
 import { HttpError } from "../helpers/index.js";
+import gravatar from "gravatar";
 import bcrypt from "bcrypt";
-// import express from "express";
 import Join from "../models/Join.js";
+import Join from "../public/avatars";
 import jwt from "jsonwebtoken";
 import ctrlWrapper from "../decoratorse/ctrlWrapper.js";
 import "dotenv/config";
+import path from "path";
+import fs from "fs/promises";
 
 const { SECRET_KEY } = process.env;
+
+const postersPath = path.join(__dirname, "../", "public", "avatars");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -15,10 +20,12 @@ const register = async (req, res) => {
   if (join) {
     throw HttpError(409, "Email already in use");
   }
+  const poster = gravatar.url(email);
   const hashPassword = await bcrypt.hash(password, 10);
   const newJoin = await Join.create({
     ...req.body,
     password: hashPassword,
+    poster,
     owner,
   });
   res.status(201).json({
@@ -79,10 +86,13 @@ const getAll = async (req, res, next) => {
   res.json(result);
 };
 
+updateAvatar = async (req, res) => {};
+
 export default {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
   getAll: ctrlWrapper(getAll),
+  updateAvatar: ctrlWrapper(updateAvatar),
 };

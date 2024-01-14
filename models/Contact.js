@@ -18,9 +18,13 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    poster: {
+      type: String,
+      required: true,
+    },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "join",
     },
   },
   {
