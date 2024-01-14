@@ -6,6 +6,9 @@ const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const JoinSchema = new Schema(
   {
+    avatarURL: {
+      type: String,
+    },
     name: {
       type: String,
       required: [true, "Name is required"],
