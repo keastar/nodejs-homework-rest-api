@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", authenticate, contactsController.getAll);
 
-router.get("/:id", authenticate, isValidId, contactsController.getByid);
+router.get("/:id", authenticate, isValidId, contactsController.getById);
 
 router.post(
   "/",

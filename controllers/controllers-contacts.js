@@ -6,7 +6,7 @@ import path from "path";
 import gravatar from "gravatar";
 import { fileURLToPath } from "url";
 
-const getAll = async (req, res, next) => {
+const getAll = async (req, res) => {
   const { id: owner } = req.join;
   const result = await Contact.find(
     { owner },
@@ -15,9 +15,14 @@ const getAll = async (req, res, next) => {
   res.json(result);
 };
 
-const getByid = async (req, res) => {
+const getById = async (req, res) => {
   const { id } = req.params;
-  const resultId = await Contact.findById(id);
+  const { id: owner } = req.join;
+  console.log("dfkd ", owner);
+  const resultId = await Contact.findOne({
+    _id: id,
+    owner,
+  });
   if (!resultId) {
     throw HttpError(404, `Contact with contactId=${id} not found`);
   }
@@ -29,7 +34,7 @@ const __dirname = path.dirname(__filename);
 
 const avatarsPath = path.join(__dirname, "../", "public", "avatars");
 
-const addContact = async (req, res, next) => {
+const addContact = async (req, res) => {
   const { id: owner } = req.join;
   const { email } = req.body;
   const poster = gravatar.url(email);
@@ -39,7 +44,10 @@ const addContact = async (req, res, next) => {
 
 const deleteContact = async (req, res) => {
   const { id } = req.params;
-  const resultDel = await Contact.findByIdAndDelete(id);
+  const resultDel = await Contact.findOneAndDelete({
+    _id: id,
+    owner,
+  });
   if (!resultDel) {
     throw HttpError(404, `Contact with contactId=${id} not found`);
   }
@@ -60,7 +68,7 @@ const updateContact = async (req, res) => {
 
 export default {
   getAll: ctrlWrapper(getAll),
-  getByid: ctrlWrapper(getByid),
+  getById: ctrlWrapper(getById),
   addContact: ctrlWrapper(addContact),
   deleteContact: ctrlWrapper(deleteContact),
   updateContact: ctrlWrapper(updateContact),
