@@ -2,16 +2,19 @@ import { HttpError } from "../helpers/index.js";
 import gravatar from "gravatar";
 import bcrypt from "bcrypt";
 import Join from "../models/Join.js";
-import Join from "../public/avatars";
 import jwt from "jsonwebtoken";
 import ctrlWrapper from "../decoratorse/ctrlWrapper.js";
 import "dotenv/config";
 import path from "path";
+import { fileURLToPath } from "url";
 import fs from "fs/promises";
 
 const { SECRET_KEY } = process.env;
 
-const postersPath = path.join(__dirname, "../", "public", "avatars");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const avatarsPath = path.join(__dirname, "../", "public", "avatars");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -86,7 +89,18 @@ const getAll = async (req, res, next) => {
   res.json(result);
 };
 
-updateAvatar = async (req, res) => {};
+const updateAvatar = async (req, res) => {
+  const { id } = req.join;
+  const { path: oldPath, originalname } = req.file;
+  const filename = `${id}_${originalname}`;
+  const resultPath = path.join(avatarsPath, originalname);
+  await fs.rename(oldPath, resultPath);
+  const avatarURL = path.join("avatars", filename);
+  await Join.findByIdAndUpdate(id, { avatarURL });
+  res.json({
+    avatarURL,
+  });
+};
 
 export default {
   register: ctrlWrapper(register),
