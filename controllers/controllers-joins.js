@@ -91,10 +91,10 @@ const getAll = async (req, res, next) => {
 
 const updateAvatar = async (req, res) => {
   const { id } = req.join;
-  const { path: oldPath, originalname } = req.file;
+  const { path: tempPath, originalname } = req.file;
   const filename = `${id}_${originalname}`;
-  const resultPath = path.join(avatarsPath, originalname);
-  await fs.rename(oldPath, resultPath);
+  const resultPath = path.join(avatarsPath, filename);
+  await fs.rename(tempPath, resultPath);
   const avatarURL = path.join("avatars", filename);
   await Join.findByIdAndUpdate(id, { avatarURL });
   res.json({

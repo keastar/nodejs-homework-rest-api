@@ -13,7 +13,6 @@ const router = express.Router();
 //SIGNUP когда приходит запрос на регистрацию, то проверка происходит по registerScheme
 router.post(
   "/register",
-  upload.single("poster"),
   isNotEmptyBody,
   validateBody(registerScheme),
   joinsController.register
