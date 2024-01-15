@@ -28,6 +28,7 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+//настройка Express на раздачу статических файлов из папки public
 app.use(express.static("public"));
 
 app.use("/api/joins", authRouter);
