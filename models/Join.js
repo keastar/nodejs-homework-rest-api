@@ -37,7 +37,19 @@ const JoinSchema = new Schema(
       type: String,
       required: true,
     },
-    owner: { type: Schema.Types.ObjectId, ref: "join", requared: true },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "join",
+      requared: true,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verification token is required"],
+    },
   },
   {
     versionKey: false,
@@ -55,6 +67,10 @@ export const registerScheme = Joi.object({
 
 export const loginScheme = Joi.object({
   password: Joi.string().required(),
+  email: Joi.string().pattern(emailRegExp).required(),
+});
+
+export const emailScheme = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
 });
 

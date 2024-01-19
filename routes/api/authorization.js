@@ -1,5 +1,5 @@
 import express from "express";
-import { registerScheme, loginScheme } from "../../models/Join.js";
+import { registerScheme, loginScheme, emailScheme } from "../../models/Join.js";
 import { validateBody } from "../../decoratorse/index.js";
 import { joinsController } from "../../controllers/index.js";
 import {
@@ -26,6 +26,15 @@ router.post(
   joinsController.login
 );
 router.get("/current", authenticate, joinsController.getCurrent);
+
+router.get("/verify/:verificationToken", joinsController.verify);
+
+router.post(
+  "/verify",
+  isNotEmptyBody,
+  validateBody(emailScheme),
+  joinsController.resendVerifyEmail
+);
 
 router.post("/logout", authenticate, joinsController.logout);
 
