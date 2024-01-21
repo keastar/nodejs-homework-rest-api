@@ -53,7 +53,7 @@ const verify = async (req, res) => {
   const { verificationToken } = req.params;
   const join = await Join.findOne({ verificationToken });
   if (!join) {
-    throw HttpError(409, "Email not found or already verify");
+    throw HttpError(404, "Email not found or already verify");
   }
   await Join.findByIdAndUpdate(join.id, {
     verify: true,
@@ -89,7 +89,7 @@ const resendVerifyEmail = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   const join = await Join.findOne({ email });
   if (!join) {
     throw HttpError(401, "Email or password is invalide");
@@ -111,6 +111,8 @@ const login = async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   await Join.findByIdAndUpdate(join.id, { token });
   res.json({
+    name,
+    email,
     token,
   });
 };
