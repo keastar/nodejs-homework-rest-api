@@ -37,11 +37,6 @@ const JoinSchema = new Schema(
       type: String,
       required: true,
     },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: "join",
-      requared: true,
-    },
     verify: {
       type: Boolean,
       default: false,

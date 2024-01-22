@@ -89,7 +89,7 @@ const resendVerifyEmail = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   const join = await Join.findOne({ email });
   if (!join) {
     throw HttpError(401, "Email or password is invalide");
@@ -111,7 +111,6 @@ const login = async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
   await Join.findByIdAndUpdate(join.id, { token });
   res.json({
-    name,
     email,
     token,
   });
